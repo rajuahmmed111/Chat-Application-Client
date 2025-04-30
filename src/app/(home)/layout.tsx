@@ -1,6 +1,3 @@
-import Advertisement from "@/components/home/advertisement";
-import Header from "@/components/home/header";
-import Footer from "@/components/shared/Footer";
 
 export default function HomeLayout({
   children,
@@ -9,12 +6,8 @@ export default function HomeLayout({
 }>) {
   return (
     <div className="">
-    <Advertisement />
-    <Header />
-
       <div className="">{children}</div>
 
-      <Footer />
     </div>
   );
 }
