@@ -1,3 +1,12 @@
-export default function Component() {
-  return <div className="">hello</div>;
-}
+import Registration from '@/components/registration/registration';
+import React from 'react';
+
+const page = () => {
+    return (
+        <div>
+            <Registration />
+        </div>
+    );
+};
+
+export default page;
