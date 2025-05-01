@@ -3,7 +3,11 @@ import { baseApi } from "./baseApi";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation<{ token: string },{ email: string; password: string }>({
+    // login
+    login: builder.mutation<
+      { token: string },
+      { email: string; password: string }
+    >({
       query: (body) => ({
         url: "/auth/login",
         method: "POST",
@@ -11,6 +15,7 @@ export const authApi = baseApi.injectEndpoints({
       }),
     }),
 
+    // logout
     logout: builder.mutation({
       query: () => {
         return {
@@ -21,7 +26,7 @@ export const authApi = baseApi.injectEndpoints({
       invalidatesTags: ["Auth"],
     }),
 
-    // forgotten profile
+    // forgot password
     forgottenPassword: builder.mutation({
       query: (data: any) => ({
         url: `/auth/forgot-password`,
@@ -30,7 +35,8 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Auth"],
     }),
-    // reset password profile
+
+    // reset password
     resetPassword: builder.mutation({
       query: (data: any) => ({
         url: `/auth/reset-password`,

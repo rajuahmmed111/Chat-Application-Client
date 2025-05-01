@@ -47,7 +47,7 @@ const InputField = () => {
     resolver: yupResolver(validationSchema),
   });
 
-  const [createUser] = useCreateUserMutation();
+  const [createUser, {isLoading}] = useCreateUserMutation();
 
   const router = useRouter();
 
@@ -184,9 +184,10 @@ const InputField = () => {
 
       <Button
         type="submit"
+        disabled={isLoading}
         className="w-full bg-[#1a237e] hover:bg-[#1a237e]/90 text-white py-6"
       >
-        Registration
+        {isLoading ? "Sign Up...": "Registration"}
       </Button>
     </form>
   );
