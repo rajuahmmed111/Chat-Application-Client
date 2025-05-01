@@ -8,6 +8,7 @@ import PhoneInputWithCountrySelect from "react-phone-number-input";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useCreateUserMutation } from "@/redux/features/api/userApi";
+import toast from "react-hot-toast";
 
 interface IFormData {
   firstName: string;
@@ -50,8 +51,11 @@ const InputField = () => {
       const res = await createUser(data).unwrap();
       console.log("User created:", res);
 
+      toast.success("User registered successfully!"); // ✅ Show success toast
+
       reset();
     } catch (err) {
+      toast.error("Failed to register user"); // ✅ Show error toast
       console.error("Failed to create user:", err);
     }
   };
