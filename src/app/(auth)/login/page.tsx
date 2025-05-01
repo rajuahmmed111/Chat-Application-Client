@@ -5,6 +5,7 @@ import type React from "react";
 import { useState } from "react";
 import { Eye, EyeOff, Mail } from "lucide-react";
 import Image from "next/image";
+import login from "@/assets/login/login.png";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -27,7 +28,7 @@ export default function LoginForm() {
       <div className="flex w-full max-w-4xl bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="hidden md:flex md:w-1/2 bg-[#f8f9fa] items-center justify-center p-8">
           <Image
-            src="/placeholder.svg?height=400&width=400"
+            src={login}
             alt="Login illustration"
             width={400}
             height={400}

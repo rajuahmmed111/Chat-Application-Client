@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useCreateUserMutation } from "@/redux/features/api/userApi";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface IFormData {
   firstName: string;
@@ -46,14 +47,19 @@ const InputField = () => {
 
   const [createUser] = useCreateUserMutation();
 
+  const router = useRouter();
+
   const onSubmit: SubmitHandler<IFormData> = async (data) => {
     try {
       const res = await createUser(data).unwrap();
       console.log("User created:", res);
 
+      reset();
+
       toast.success("User registered successfully!"); // ✅ Show success toast
 
-      reset();
+      // redirect login page
+      router.push("/login");
     } catch (err) {
       toast.error("Failed to register user"); // ✅ Show error toast
       console.error("Failed to create user:", err);
