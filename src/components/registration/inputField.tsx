@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import PhoneInputWithCountrySelect from "react-phone-number-input";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useCreateUserMutation } from "@/redux/features/api/userApi";
 
 interface IFormData {
   firstName: string;
@@ -15,8 +16,9 @@ interface IFormData {
   password: string;
   phone: string;
   userName: string;
-  dateOfBirth?: string;
-  profileImage?: string;
+  // dateOfBirth?: string;
+  // profileImage?: string;
+  // role: "USER" | "ADMIN" | "SUPER_ADMIN";
 }
 
 const validationSchema = Yup.object({
@@ -32,21 +34,31 @@ const validationSchema = Yup.object({
   userName: Yup.string()
     .min(3, "Username must be at least 3 characters")
     .required("Username is required"),
-  dateOfBirth: Yup.string(), // Optional
-  profileImage: Yup.string().url("Must be a valid URL"), // Optional
+  // dateOfBirth: Yup.string(), // Optional
+  // profileImage: Yup.string().url("Must be a valid URL"), // Optional
 });
 
 const InputField = () => {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<IFormData>({
     resolver: yupResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<IFormData> = (data) => {
-    console.log("Form Data:", data);
+  const [createUser] = useCreateUserMutation();
+
+  const onSubmit: SubmitHandler<IFormData> = async (data) => {
+    try {
+      const res = await createUser(data).unwrap();
+      console.log("User created:", res);
+
+      reset();
+    } catch (err) {
+      console.error("Failed to create user:", err);
+    }
   };
 
   return (
@@ -162,7 +174,7 @@ const InputField = () => {
           )}
         </div>
 
-        <div>
+        {/* <div>
           <Controller
             name="dateOfBirth"
             control={control}
@@ -177,9 +189,9 @@ const InputField = () => {
           {errors.dateOfBirth && (
             <p className="text-red-500">{errors.dateOfBirth.message}</p>
           )}
-        </div>
+        </div> */}
 
-        <div>
+        {/* <div>
           <Controller
             name="profileImage"
             control={control}
@@ -195,7 +207,7 @@ const InputField = () => {
           {errors.profileImage && (
             <p className="text-red-500">{errors.profileImage.message}</p>
           )}
-        </div>
+        </div> */}
       </div>
 
       <Button

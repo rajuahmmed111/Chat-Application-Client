@@ -1,24 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { baseApi } from "./baseApi";
 
 const userApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllUser: build.query({
-      query: () => {
+    createUser: build.mutation({
+      query: (data: any) => {
         return {
-          url: "/users",
-          method: "GET",
-        };
-      },
-    }),
-    getUserById: build.query({
-      query: (id) => {
-        return {
-          url: `/users/${id}`,
-          method: "GET",
+          url: `users/create`,
+          method: "POST",
+          body: data,
         };
       },
     }),
   }),
 });
 
-export const { useGetAllUserQuery, useGetUserByIdQuery } = userApi;
+export const { useCreateUserMutation } = userApi;
