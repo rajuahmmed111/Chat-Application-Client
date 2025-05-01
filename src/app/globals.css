@@ -11,6 +11,8 @@ body {
 @layer base {
   :root {
     --radius: 0.5rem;
+    --foreground-rgb: 0, 0, 0;
+    --background-rgb: 255, 255, 255;
   }
 }
 
@@ -19,3 +21,24 @@ body {
   outline: none;
   box-shadow: none;
 }
+
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+

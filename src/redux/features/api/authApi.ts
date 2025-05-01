@@ -1,101 +1,135 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { baseApi } from "./baseApi";
+// /* eslint-disable @typescript-eslint/no-explicit-any */
+// import { baseApi } from "./baseApi";
 
-export const authApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
-    // login
-    login: build.mutation({
-      query: (data: any) => {
-        return {
-          url: `/auth/login`,
-          method: "POST",
-          body: data,
-        };
-      },
-      invalidatesTags: ["Auth"],
-    }),
-    logout: build.mutation({
-      query: () => {
-        return {
-          url: `/auth/logout`,
-          method: "POST",
-        };
-      },
-      invalidatesTags: ["Auth"],
-    }),
+// export const authApi = baseApi.injectEndpoints({
+//   endpoints: (build) => ({
+//     // login
+//     // login: build.mutation<{ data: { accessToken: string } }, { email: string; password: string }>({
+//     //   query: (data) => ({
+//     //     url: `/auth/login`,
+//     //     method: "POST",
+//     //     body: data,
+//     //   }),
+//     //   invalidatesTags: ["Auth"],
+//     // }),
 
-    // register create client/ trainer
-    registerTariner: build.mutation({
-      query: (data: any) => {
-        return {
-          url: `/trainer/create-trainer`,
-          method: "POST",
-          body: data,
-        };
-      },
-      invalidatesTags: ["Auth"],
-    }),
+//     // login
+//     // login: build.mutation({
+//     //   query: (data: any) => {
+//     //     return {
+//     //       url: `/auth/login`,
+//     //       method: "POST",
+//     //       body: data,
+//     //     };
+//     //   },
+//     //   invalidatesTags: ["Auth"],
+//     // }),
 
-    // genaral user
-    registerClient: build.mutation({
-      query: (data: any) => {
-        return {
-          url: `/client/create-client`,
-          method: "POST",
-          body: data,
-        };
-      },
-      invalidatesTags: ["Auth"],
-    }),
+//     logout: build.mutation({
+//       query: () => {
+//         return {
+//           url: `/auth/logout`,
+//           method: "POST",
+//         };
+//       },
+//       invalidatesTags: ["Auth"],
+//     }),
 
-    // forgotten profile
-    forgottenPassword: build.mutation({
-      query: (data: any) => ({
-        url: `/auth/forgot-password`,
-        method: "POST",
-        body: data,
+//     // register create client/ trainer
+//     registerTariner: build.mutation({
+//       query: (data: any) => {
+//         return {
+//           url: `/trainer/create-trainer`,
+//           method: "POST",
+//           body: data,
+//         };
+//       },
+//       invalidatesTags: ["Auth"],
+//     }),
+
+//     // genaral user
+//     registerClient: build.mutation({
+//       query: (data: any) => {
+//         return {
+//           url: `/client/create-client`,
+//           method: "POST",
+//           body: data,
+//         };
+//       },
+//       invalidatesTags: ["Auth"],
+//     }),
+
+//     // forgotten profile
+//     forgottenPassword: build.mutation({
+//       query: (data: any) => ({
+//         url: `/auth/forgot-password`,
+//         method: "POST",
+//         body: data,
+//       }),
+//       invalidatesTags: ["Auth"],
+//     }),
+//     // reset password profile
+//     resetPassword: build.mutation({
+//       query: (data: any) => ({
+//         url: `/auth/reset-password`,
+//         method: "POST",
+//         body: data,
+//       }),
+//       invalidatesTags: ["Auth"],
+//     }),
+//     // get me
+//     getMyProfile: build.query({
+//       query: () => ({
+//         url: `/auth/get-me`,
+//         method: "GET",
+//       }),
+//       providesTags: ["Auth"],
+//     }),
+
+//     // change password
+//     changePassword: build.mutation({
+//       query: (data: any) => {
+//         return {
+//           url: `/auth/change-password`,
+//           method: "PUT",
+//           body: data,
+//         };
+//       },
+//       invalidatesTags: ["Auth"],
+//     }),
+//   }),
+// });
+
+// export const {
+//   useLoginMutation,
+//   useLogoutMutation,
+//   useForgottenPasswordMutation,
+//   useChangePasswordMutation,
+//   useGetMyProfileQuery,
+//   useResetPasswordMutation,
+//   useRegisterTarinerMutation,
+//   useRegisterClientMutation,
+// } = authApi;
+
+
+// redux/features/api/authApi.ts
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
+export const authApi = createApi({
+  reducerPath: 'authApi',
+  baseQuery: fetchBaseQuery({
+    baseUrl:'http://localhost:5000/api/v1',
+    credentials: 'include',       // send cookies
+  }),
+  endpoints: (builder) => ({
+    login: builder.mutation<{ token: string }, { email: string; password: string }>({
+      query: (body) => ({
+        url: '/auth/login',
+        method: 'POST',
+        body,
       }),
-      invalidatesTags: ["Auth"],
-    }),
-    // reset password profile
-    resetPassword: build.mutation({
-      query: (data: any) => ({
-        url: `/auth/reset-password`,
-        method: "POST",
-        body: data,
-      }),
-      invalidatesTags: ["Auth"],
-    }),
-    // get me
-    getMyProfile: build.query({
-      query: () => ({
-        url: `/auth/get-me`,
-        method: "GET",
-      }),
-      providesTags: ["Auth"],
-    }),
-
-    // change password
-    changePassword: build.mutation({
-      query: (data: any) => {
-        return {
-          url: `/auth/change-password`,
-          method: "PUT",
-          body: data,
-        };
-      },
-      invalidatesTags: ["Auth"],
     }),
   }),
 });
 
-export const {
-  useLoginMutation,
-  useLogoutMutation,
-  useForgottenPasswordMutation,
-  useChangePasswordMutation,
-  useGetMyProfileQuery,
-  useResetPasswordMutation,
-  useRegisterTarinerMutation,
-  useRegisterClientMutation,
-} = authApi;
+export const { useLoginMutation } = authApi;

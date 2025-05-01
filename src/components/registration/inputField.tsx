@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React from "react";
@@ -60,9 +61,9 @@ const InputField = () => {
 
       // redirect login page
       router.push("/login");
-    } catch (err) {
+    } catch (error: any) {
       toast.error("Failed to register user"); // ✅ Show error toast
-      console.error("Failed to create user:", err);
+      console.error("Failed to create user:", error);
     }
   };
 
