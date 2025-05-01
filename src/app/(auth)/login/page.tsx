@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 type FormValues = { email: string; password: string };
 
@@ -65,9 +66,12 @@ export default function LoginPage() {
                 Remember me
               </label>
             </div>
-            <a href="#" className="text-sm text-gray-600 hover:text-purple-500">
+            <Link
+              href="/forgot-password"
+              className="text-sm text-gray-600 hover:text-purple-500"
+            >
               Forgot password?
-            </a>
+            </Link>
           </div>
 
           <button

@@ -11,6 +11,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useCreateUserMutation } from "@/redux/features/api/userApi";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import "react-phone-number-input/style.css";
 
 interface IFormData {
   firstName: string;
@@ -52,8 +53,7 @@ const InputField = () => {
 
   const onSubmit: SubmitHandler<IFormData> = async (data) => {
     try {
-      const res = await createUser(data).unwrap();
-      console.log("User created:", res);
+      await createUser(data).unwrap();
 
       reset();
 
@@ -71,6 +71,7 @@ const InputField = () => {
     <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
       <div className="space-y-4">
         <div className="flex gap-4 w-full">
+          {/* first name */}
           <div className="flex-1">
             <Controller
               name="firstName"

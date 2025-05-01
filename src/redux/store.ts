@@ -1,27 +1,12 @@
-// import { configureStore } from "@reduxjs/toolkit";
-// import { baseApi } from "./features/api/baseApi";
-// const store = configureStore({
-//   reducer: {
-//     [baseApi.reducerPath]: baseApi.reducer,
-//   },
-//   middleware: (getDefaultMiddleware) =>
-//     getDefaultMiddleware().concat(baseApi.middleware),
-// });
+import { configureStore } from "@reduxjs/toolkit";
+import { baseApi } from "@/redux/features/api/baseApi";
 
-// export default store;
-
-
-
-// redux/store.ts
-import { configureStore } from '@reduxjs/toolkit';
-import { authApi } from './features/api/authApi';
-
-export const store = configureStore({
+const store = configureStore({
   reducer: {
-    [authApi.reducerPath]: authApi.reducer,
+    [baseApi.reducerPath]: baseApi.reducer,
   },
-  middleware: (gDM) => gDM().concat(authApi.middleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(baseApi.middleware),
 });
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState  = ReturnType<typeof store.getState>;
+export default store;
