@@ -12,6 +12,7 @@ import { useCreateUserMutation } from "@/redux/features/api/userApi";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import "react-phone-number-input/style.css";
+import Link from "next/link";
 
 interface IFormData {
   firstName: string;
@@ -47,7 +48,7 @@ const InputField = () => {
     resolver: yupResolver(validationSchema),
   });
 
-  const [createUser, {isLoading}] = useCreateUserMutation();
+  const [createUser, { isLoading }] = useCreateUserMutation();
 
   const router = useRouter();
 
@@ -187,8 +188,17 @@ const InputField = () => {
         disabled={isLoading}
         className="w-full bg-purple-600 hover:bg-[#1a237e]/90 text-white py-6"
       >
-        {isLoading ? "Sign Up...": "Registration"}
+        {isLoading ? "Sign Up..." : "Registration"}
       </Button>
+
+      <div className="mt-4 text-center">
+        <p className="text-sm text-gray-600">
+          Already have an account?{" "}
+          <Link href="/login" className="text-purple-600 hover:underline">
+            Login
+          </Link>
+        </p>
+      </div>
     </form>
   );
 };

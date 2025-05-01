@@ -139,6 +139,17 @@ export default function LoginPage() {
                   </svg>
                   Google
                 </button>
+                <div className="mt-4 text-center">
+                  <p className="text-sm text-gray-600">
+                    Don&apos;t have an account?{" "}
+                    <Link
+                      href="/registration"
+                      className="text-purple-600 hover:underline"
+                    >
+                      Register
+                    </Link>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
