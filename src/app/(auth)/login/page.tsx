@@ -18,12 +18,12 @@ export default function LoginPage() {
   const onSubmit = async (data: FormValues) => {
     try {
       const res = await login(data).unwrap();
-
       localStorage.setItem("token", res.token);
 
       reset();
-
       toast.success("Login successfully !");
+
+      // redirect home
       router.push("/");
     } catch (err: any) {
       toast.error(err?.data?.message || "Login failed");
@@ -50,6 +50,26 @@ export default function LoginPage() {
             placeholder="Password"
             className="w-full mb-3 p-2 border rounded"
           />
+
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center">
+              <input
+                id="rememberMe"
+                type="checkbox"
+                className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+              />
+              <label
+                htmlFor="rememberMe"
+                className="ml-2 block text-sm text-gray-600"
+              >
+                Remember me
+              </label>
+            </div>
+            <a href="#" className="text-sm text-gray-600 hover:text-purple-500">
+              Forgot password?
+            </a>
+          </div>
+
           <button
             type="button"
             onClick={() => setShowPwd((v) => !v)}
@@ -231,28 +251,28 @@ export default function LoginPage() {
 //                 )}
 //               </div>
 
-//               <div className="flex items-center justify-between mb-6">
-//                 <div className="flex items-center">
-//                   <input
-//                     id="rememberMe"
-//                     type="checkbox"
-//                     className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
-//                     {...register("rememberMe")}
-//                   />
-//                   <label
-//                     htmlFor="rememberMe"
-//                     className="ml-2 block text-sm text-gray-600"
-//                   >
-//                     Remember me
-//                   </label>
-//                 </div>
-//                 <a
-//                   href="#"
-//                   className="text-sm text-gray-600 hover:text-purple-500"
-//                 >
-//                   Forgot password?
-//                 </a>
-//               </div>
+// <div className="flex items-center justify-between mb-6">
+//   <div className="flex items-center">
+//     <input
+//       id="rememberMe"
+//       type="checkbox"
+//       className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+//       {...register("rememberMe")}
+//     />
+//     <label
+//       htmlFor="rememberMe"
+//       className="ml-2 block text-sm text-gray-600"
+//     >
+//       Remember me
+//     </label>
+//   </div>
+//   <a
+//     href="#"
+//     className="text-sm text-gray-600 hover:text-purple-500"
+//   >
+//     Forgot password?
+//   </a>
+// </div>
 
 //               <button
 //                 type="submit"
