@@ -16,9 +16,6 @@ interface IFormData {
   password: string;
   phone: string;
   userName: string;
-  // dateOfBirth?: string;
-  // profileImage?: string;
-  // role: "USER" | "ADMIN" | "SUPER_ADMIN";
 }
 
 const validationSchema = Yup.object({
@@ -34,8 +31,6 @@ const validationSchema = Yup.object({
   userName: Yup.string()
     .min(3, "Username must be at least 3 characters")
     .required("Username is required"),
-  // dateOfBirth: Yup.string(), // Optional
-  // profileImage: Yup.string().url("Must be a valid URL"), // Optional
 });
 
 const InputField = () => {
@@ -173,41 +168,6 @@ const InputField = () => {
             <p className="text-red-500">{errors.phone.message}</p>
           )}
         </div>
-
-        {/* <div>
-          <Controller
-            name="dateOfBirth"
-            control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                type="datetime-local"
-                className="rounded-lg border-gray-200 focus-visible:ring-2 focus-visible:ring-blue-500"
-              />
-            )}
-          />
-          {errors.dateOfBirth && (
-            <p className="text-red-500">{errors.dateOfBirth.message}</p>
-          )}
-        </div> */}
-
-        {/* <div>
-          <Controller
-            name="profileImage"
-            control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                type="url"
-                placeholder="Profile image URL (optional)"
-                className="rounded-lg border-gray-200 focus-visible:ring-2 focus-visible:ring-blue-500"
-              />
-            )}
-          />
-          {errors.profileImage && (
-            <p className="text-red-500">{errors.profileImage.message}</p>
-          )}
-        </div> */}
       </div>
 
       <Button
