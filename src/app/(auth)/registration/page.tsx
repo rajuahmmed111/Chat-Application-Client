@@ -3,7 +3,7 @@ import InputField from "@/components/registration/inputField";
 export default function Registration() {
   return (
     <>
-      <div className="bg-[#100C73] h-[60px]"></div>
+      <div className="bg-purple-600 h-[60px]"></div>
 
       <div className="bg-[#F1F4F8] px-4 py-16">
         <div className="flex justify-center items-center">

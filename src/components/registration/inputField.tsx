@@ -185,7 +185,7 @@ const InputField = () => {
       <Button
         type="submit"
         disabled={isLoading}
-        className="w-full bg-[#1a237e] hover:bg-[#1a237e]/90 text-white py-6"
+        className="w-full bg-purple-600 hover:bg-[#1a237e]/90 text-white py-6"
       >
         {isLoading ? "Sign Up...": "Registration"}
       </Button>

@@ -6,6 +6,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import Link from "next/link";
+import LoginImg from "@/assets/login/login.png";
+import Image from "next/image";
 
 type FormValues = { email: string; password: string };
 
@@ -32,66 +34,146 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="p-8 bg-white rounded shadow-md w-full max-w-sm"
-      >
-        <h2 className="text-2xl mb-4 text-center">Login</h2>
-        <input
-          {...register("email", { required: true })}
-          type="email"
-          placeholder="Email"
-          className="w-full mb-3 p-2 border rounded"
-        />
-        <div className="relative">
-          <input
-            {...register("password", { required: true })}
-            type={showPwd ? "text" : "password"}
-            placeholder="Password"
-            className="w-full mb-3 p-2 border rounded"
-          />
-
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center">
-              <input
-                id="rememberMe"
-                type="checkbox"
-                className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <div className="w-full max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden border border-blue-200">
+        <div className="flex flex-col md:flex-row">
+          {/* right side */}
+          <div className="w-full md:w-1/2 bg-gray-100 flex items-center justify-center p-8">
+            <div className="relative w-full h-64 md:h-80">
+              <Image
+                src={LoginImg}
+                alt="Login illustration"
+                fill
+                className="object-contain"
               />
-              <label
-                htmlFor="rememberMe"
-                className="ml-2 block text-sm text-gray-600"
-              >
-                Remember me
-              </label>
             </div>
-            <Link
-              href="/forgot-password"
-              className="text-sm text-gray-600 hover:text-purple-500"
-            >
-              Forgot password?
-            </Link>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setShowPwd((v) => !v)}
-            className="absolute right-2 top-2 text-gray-500"
-          >
-            {showPwd ? "Hide" : "Show"}
-          </button>
+          {/* left side */}
+          <div className="w-full md:w-1/2 p-8">
+            <div className="max-w-md mx-auto">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <h2 className="text-2xl mb-4 text-center">Login</h2>
+                <input
+                  {...register("email", { required: true })}
+                  type="email"
+                  placeholder="Email"
+                  className="w-full mb-3 p-2 border rounded"
+                />
+                <div className="relative">
+                  <input
+                    {...register("password", { required: true })}
+                    type={showPwd ? "text" : "password"}
+                    placeholder="Password"
+                    className="w-full mb-3 p-2 border rounded"
+                  />
+
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center">
+                      <input
+                        id="rememberMe"
+                        type="checkbox"
+                        className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+                      />
+                      <label
+                        htmlFor="rememberMe"
+                        className="ml-2 block text-sm text-gray-600"
+                      >
+                        Remember me
+                      </label>
+                    </div>
+                    <Link
+                      href="/forgot-password"
+                      className="text-sm text-gray-600 hover:text-purple-500"
+                    >
+                      Forgot password?
+                    </Link>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setShowPwd((v) => !v)}
+                    className="absolute right-2 top-2 text-gray-500"
+                  >
+                    {showPwd ? "Hide" : "Show"}
+                  </button>
+                </div>
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full bg-purple-600 text-white p-2 rounded disabled:opacity-50"
+                >
+                  {isLoading ? "Logging in…" : "Login"}
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="w-full bg-purple-600 text-white p-2 rounded disabled:opacity-50"
-        >
-          {isLoading ? "Logging in…" : "Login"}
-        </button>
-      </form>
+      </div>
     </div>
   );
+
+  // return (
+  //   <div className="min-h-screen flex items-center justify-center bg-gray-50">
+  //     <form
+  //       onSubmit={handleSubmit(onSubmit)}
+  //       className="p-8 bg-white rounded shadow-md w-full max-w-sm"
+  //     >
+  //       <h2 className="text-2xl mb-4 text-center">Login</h2>
+  //       <input
+  //         {...register("email", { required: true })}
+  //         type="email"
+  //         placeholder="Email"
+  //         className="w-full mb-3 p-2 border rounded"
+  //       />
+  //       <div className="relative">
+  //         <input
+  //           {...register("password", { required: true })}
+  //           type={showPwd ? "text" : "password"}
+  //           placeholder="Password"
+  //           className="w-full mb-3 p-2 border rounded"
+  //         />
+
+  //         <div className="flex items-center justify-between mb-6">
+  //           <div className="flex items-center">
+  //             <input
+  //               id="rememberMe"
+  //               type="checkbox"
+  //               className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+  //             />
+  //             <label
+  //               htmlFor="rememberMe"
+  //               className="ml-2 block text-sm text-gray-600"
+  //             >
+  //               Remember me
+  //             </label>
+  //           </div>
+  //           <Link
+  //             href="/forgot-password"
+  //             className="text-sm text-gray-600 hover:text-purple-500"
+  //           >
+  //             Forgot password?
+  //           </Link>
+  //         </div>
+
+  //         <button
+  //           type="button"
+  //           onClick={() => setShowPwd((v) => !v)}
+  //           className="absolute right-2 top-2 text-gray-500"
+  //         >
+  //           {showPwd ? "Hide" : "Show"}
+  //         </button>
+  //       </div>
+  //       <button
+  //         type="submit"
+  //         disabled={isLoading}
+  //         className="w-full bg-purple-600 text-white p-2 rounded disabled:opacity-50"
+  //       >
+  //         {isLoading ? "Logging in…" : "Login"}
+  //       </button>
+  //     </form>
+  //   </div>
+  // );
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
