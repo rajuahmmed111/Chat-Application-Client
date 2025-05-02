@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect } from "react";
 import {
   Search,
   Paperclip,
@@ -14,84 +14,96 @@ import {
   Video,
   MoreHorizontal,
   ArrowLeft,
-} from "lucide-react"
-import Image from "next/image"
-import { useMediaQuery } from "@/hooks/use-media-query"
+} from "lucide-react";
+import Image from "next/image";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 export default function ChatApp() {
-  const [message, setMessage] = useState("")
-//   const [showLeftSidebar, setShowLeftSidebar] = useState(true)
-  const [showRightSidebar, setShowRightSidebar] = useState(false)
-  const [activeMobileView, setActiveMobileView] = useState<"list" | "chat" | "info">("list")
+  const [message, setMessage] = useState("");
+  // const [showLeftSidebar, setShowLeftSidebar] = useState(true);
+  const [showRightSidebar, setShowRightSidebar] = useState(false);
+  const [activeMobileView, setActiveMobileView] = useState<
+    "list" | "chat" | "info"
+  >("list");
 
-  const chatContainerRef = useRef<HTMLDivElement>(null)
-  const isMobile = useMediaQuery("(max-width: 768px)")
-//   const isTablet = useMediaQuery("(max-width: 1024px)")
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  // const isTablet = useMediaQuery("(max-width: 1024px)");
 
   useEffect(() => {
     // Reset mobile view when screen size changes
     if (!isMobile) {
-      setActiveMobileView("chat")
+      setActiveMobileView("chat");
     } else {
-      setActiveMobileView("list")
+      setActiveMobileView("list");
     }
-  }, [isMobile])
+  }, [isMobile]);
 
   useEffect(() => {
     // Scroll to bottom of chat when component mounts
     if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
     }
-  }, [])
+  }, []);
 
   const handleSendMessage = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (message.trim()) {
       // In a real app, you would send the message to your backend
-      setMessage("")
+      setMessage("");
 
       // Scroll to bottom after sending message
       if (chatContainerRef.current) {
-        chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
+        chatContainerRef.current.scrollTop =
+          chatContainerRef.current.scrollHeight;
       }
     }
-  }
+  };
 
   const handleChatSelect = () => {
     if (isMobile) {
-      setActiveMobileView("chat")
+      setActiveMobileView("chat");
     }
-  }
+  };
 
   const handleBackToList = () => {
     if (isMobile) {
-      setActiveMobileView("list")
+      setActiveMobileView("list");
     }
-  }
+  };
 
   const handleShowInfo = () => {
     if (isMobile) {
-      setActiveMobileView("info")
+      setActiveMobileView("info");
     } else {
-      setShowRightSidebar(!showRightSidebar)
+      setShowRightSidebar(!showRightSidebar);
     }
-  }
+  };
 
   const handleBackToChat = () => {
     if (isMobile) {
-      setActiveMobileView("chat")
+      setActiveMobileView("chat");
     }
-  }
+  };
 
   return (
     <div className="flex h-screen bg-white">
       {/* Left Sidebar */}
       {(!isMobile || activeMobileView === "list") && (
-        <div className={`${isMobile ? "w-full" : "w-80"} border-r flex flex-col`}>
+        <div
+          className={`${isMobile ? "w-full" : "w-80"} border-r flex flex-col`}
+        >
           <div className="p-4 border-b">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 flex items-center justify-center">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path d="M4 4L10 12V20L14 16V12L20 4H4Z" fill="#7C3AED" />
                 </svg>
               </div>
@@ -110,35 +122,79 @@ export default function ChatApp() {
           <div className="p-4 border-b">
             <h2 className="font-medium mb-3">Online</h2>
             <div className="flex gap-4 overflow-x-auto pb-2">
-              {["Benkaii", "Jason", "Kyedae", "Aleck", "Alfie"].map((name, index) => (
-                <div key={index} className="flex flex-col items-center flex-shrink-0">
-                  <div className="relative">
-                    <div className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden">
-                      <Image
-                        src={`/placeholder.svg?height=40&width=40&text=${name.charAt(0)}`}
-                        alt={name}
-                        width={40}
-                        height={40}
-                      />
+              {["Benkaii", "Jason", "Kyedae", "Aleck", "Alfie"].map(
+                (name, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col items-center flex-shrink-0"
+                  >
+                    <div className="relative">
+                      <div className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden">
+                        <Image
+                          src={`/placeholder.svg?height=40&width=40&text=${name.charAt(
+                            0
+                          )}`}
+                          alt={name}
+                          width={40}
+                          height={40}
+                        />
+                      </div>
+                      <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
                     </div>
-                    <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+                    <span className="text-xs mt-1">{name}</span>
                   </div>
-                  <span className="text-xs mt-1">{name}</span>
-                </div>
-              ))}
+                )
+              )}
             </div>
           </div>
 
           <div className="flex-1 overflow-y-auto">
             <h2 className="font-medium p-4 pb-2">Messages</h2>
             {[
-              { name: "Jason Susanto", message: "Image Sent", time: "9:45 AM", online: true },
-              { name: "JJ Jingga", message: "Nice clutch vs Fnatic 🔥", time: "9:40 AM", online: false, unread: 2 },
-              { name: "Benkaii", message: "Sent u in GRP", time: "Yesterday", online: true },
-              { name: "Asterisk", message: "Yea let's play 5 stacks", time: "Yesterday", online: true },
-              { name: "Aleck", message: "COME SCRIM HERE!!!", time: "Yesterday", online: true, unread: 2 },
-              { name: "Tyson", message: "Thanks, let's meet at Cha...", time: "Yesterday", online: true },
-              { name: "Kyedae", message: "W GAMING!!!", time: "Yesterday", online: true },
+              {
+                name: "Jason Susanto",
+                message: "Image Sent",
+                time: "9:45 AM",
+                online: true,
+              },
+              {
+                name: "JJ Jingga",
+                message: "Nice clutch vs Fnatic 🔥",
+                time: "9:40 AM",
+                online: false,
+                unread: 2,
+              },
+              {
+                name: "Benkaii",
+                message: "Sent u in GRP",
+                time: "Yesterday",
+                online: true,
+              },
+              {
+                name: "Asterisk",
+                message: "Yea let's play 5 stacks",
+                time: "Yesterday",
+                online: true,
+              },
+              {
+                name: "Aleck",
+                message: "COME SCRIM HERE!!!",
+                time: "Yesterday",
+                online: true,
+                unread: 2,
+              },
+              {
+                name: "Tyson",
+                message: "Thanks, let's meet at Cha...",
+                time: "Yesterday",
+                online: true,
+              },
+              {
+                name: "Kyedae",
+                message: "W GAMING!!!",
+                time: "Yesterday",
+                online: true,
+              },
               {
                 name: "PAPER REX",
                 message: "GG BRO, 2nd place is great L...",
@@ -150,13 +206,17 @@ export default function ChatApp() {
             ].map((chat, index) => (
               <div
                 key={index}
-                className={`flex items-center p-4 hover:bg-gray-50 cursor-pointer ${chat.name === "Jason Susanto" ? "bg-gray-50" : ""}`}
+                className={`flex items-center p-4 hover:bg-gray-50 cursor-pointer ${
+                  chat.name === "Jason Susanto" ? "bg-gray-50" : ""
+                }`}
                 onClick={handleChatSelect}
               >
                 <div className="relative mr-3">
                   <div className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden">
                     <Image
-                      src={`/placeholder.svg?height=40&width=40&text=${chat.name.charAt(0)}`}
+                      src={`/placeholder.svg?height=40&width=40&text=${chat.name.charAt(
+                        0
+                      )}`}
                       alt={chat.name}
                       width={40}
                       height={40}
@@ -188,7 +248,9 @@ export default function ChatApp() {
                         />
                       </svg>
                     )}
-                    <p className="text-sm text-gray-500 truncate">{chat.message}</p>
+                    <p className="text-sm text-gray-500 truncate">
+                      {chat.message}
+                    </p>
                   </div>
                 </div>
                 {chat.unread && (
@@ -215,12 +277,29 @@ export default function ChatApp() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
-                <path d="M12 8V16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M8 12H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M12 8V16"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M8 12H16"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </button>
             <button className="p-2 rounded-full hover:bg-gray-100">
-              <svg className="h-6 w-6 text-gray-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                className="h-6 w-6 text-gray-500"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"
                   stroke="currentColor"
@@ -238,7 +317,12 @@ export default function ChatApp() {
               </svg>
             </button>
             <button className="p-2 rounded-full hover:bg-gray-100">
-              <svg className="h-6 w-6 text-gray-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                className="h-6 w-6 text-gray-500"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
                   stroke="currentColor"
@@ -256,7 +340,12 @@ export default function ChatApp() {
               </svg>
             </button>
             <button className="p-2 rounded-full hover:bg-gray-100">
-              <svg className="h-6 w-6 text-gray-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                className="h-6 w-6 text-gray-500"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"
                   stroke="currentColor"
@@ -274,7 +363,12 @@ export default function ChatApp() {
               </svg>
             </button>
             <button className="p-2 rounded-full hover:bg-gray-100">
-              <svg className="h-6 w-6 text-gray-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                className="h-6 w-6 text-gray-500"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   d="M22 12H18L15 21L9 3L6 12H2"
                   stroke="currentColor"
@@ -300,7 +394,12 @@ export default function ChatApp() {
               )}
               <div className="relative mr-3">
                 <div className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden">
-                  <Image src="/placeholder.svg?height=40&width=40&text=J" alt="Jason Susanto" width={40} height={40} />
+                  <Image
+                    src="/placeholder.svg?height=40&width=40&text=J"
+                    alt="Jason Susanto"
+                    width={40}
+                    height={40}
+                  />
                 </div>
                 <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
               </div>
@@ -316,46 +415,64 @@ export default function ChatApp() {
               <button className="text-gray-500 hover:text-gray-700 hidden sm:block">
                 <Phone className="h-5 w-5" />
               </button>
-              <button className="text-gray-500 hover:text-gray-700" onClick={handleShowInfo}>
+              <button
+                className="text-gray-500 hover:text-gray-700"
+                onClick={handleShowInfo}
+              >
                 <MoreHorizontal className="h-5 w-5" />
               </button>
             </div>
           </div>
 
-          <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4">
+          <div
+            ref={chatContainerRef}
+            className="flex-1 overflow-y-auto p-4 space-y-4"
+          >
             <div className="text-center">
-              <span className="text-xs bg-gray-100 px-2 py-1 rounded-full text-gray-500">Yesterday</span>
+              <span className="text-xs bg-gray-100 px-2 py-1 rounded-full text-gray-500">
+                Yesterday
+              </span>
             </div>
 
             <div className="flex items-end">
               <div className="max-w-[75%] bg-gray-100 rounded-t-lg rounded-br-lg p-3">
                 <p>Hahaha, lol 😂</p>
-                <span className="text-xs text-gray-500 mt-1 block">09:27 PM</span>
+                <span className="text-xs text-gray-500 mt-1 block">
+                  09:27 PM
+                </span>
               </div>
             </div>
 
             <div className="text-center">
-              <span className="text-xs bg-gray-100 px-2 py-1 rounded-full text-gray-500">Today</span>
+              <span className="text-xs bg-gray-100 px-2 py-1 rounded-full text-gray-500">
+                Today
+              </span>
             </div>
 
             <div className="flex items-end">
               <div className="max-w-[75%] bg-gray-100 rounded-t-lg rounded-br-lg p-3">
                 <p>Ron, when you&apos;ll book a plane ticket?</p>
-                <span className="text-xs text-gray-500 mt-1 block">09:27 PM</span>
+                <span className="text-xs text-gray-500 mt-1 block">
+                  09:27 PM
+                </span>
               </div>
             </div>
 
             <div className="flex items-end justify-end">
               <div className="max-w-[75%] bg-purple-600 text-white rounded-t-lg rounded-bl-lg p-3">
                 <p>Maybe tomorrow</p>
-                <span className="text-xs text-purple-200 mt-1 block">09:28 PM</span>
+                <span className="text-xs text-purple-200 mt-1 block">
+                  09:28 PM
+                </span>
               </div>
             </div>
 
             <div className="flex items-end justify-end">
               <div className="max-w-[75%] bg-purple-600 text-white rounded-t-lg rounded-bl-lg p-3">
                 <p>After we go back to SG</p>
-                <span className="text-xs text-purple-200 mt-1 block">09:28 PM ✓</span>
+                <span className="text-xs text-purple-200 mt-1 block">
+                  09:28 PM ✓
+                </span>
               </div>
             </div>
 
@@ -363,7 +480,13 @@ export default function ChatApp() {
               <div className="max-w-[75%] bg-gray-100 rounded-t-lg rounded-br-lg p-3">
                 <div className="flex items-center gap-2">
                   <button className="bg-purple-600 text-white rounded-full p-1">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
                       <path
                         d="M5 12L19 12"
                         stroke="currentColor"
@@ -384,14 +507,19 @@ export default function ChatApp() {
                     <div className="w-full bg-gray-200 h-8 rounded-lg flex items-center px-2">
                       <div className="flex-1">
                         <div className="w-full h-2 bg-gray-300 rounded-full">
-                          <div className="bg-purple-600 h-2 rounded-full" style={{ width: "30%" }}></div>
+                          <div
+                            className="bg-purple-600 h-2 rounded-full"
+                            style={{ width: "30%" }}
+                          ></div>
                         </div>
                       </div>
                       <span className="text-xs text-gray-500 ml-2">0:31</span>
                     </div>
                   </div>
                 </div>
-                <span className="text-xs text-gray-500 mt-1 block">09:31 PM</span>
+                <span className="text-xs text-gray-500 mt-1 block">
+                  09:31 PM
+                </span>
               </div>
             </div>
 
@@ -407,16 +535,24 @@ export default function ChatApp() {
                     className="rounded-lg"
                   />
                 </div>
-                <span className="text-xs text-purple-200 mt-1 block">10:42 AM ✓</span>
+                <span className="text-xs text-purple-200 mt-1 block">
+                  10:42 AM ✓
+                </span>
               </div>
             </div>
           </div>
 
-          <form onSubmit={handleSendMessage} className="border-t p-4 flex items-center gap-2">
+          <form
+            onSubmit={handleSendMessage}
+            className="border-t p-4 flex items-center gap-2"
+          >
             <button type="button" className="text-gray-500 hover:text-gray-700">
               <Paperclip className="h-5 w-5" />
             </button>
-            <button type="button" className="text-gray-500 hover:text-gray-700 hidden sm:block">
+            <button
+              type="button"
+              className="text-gray-500 hover:text-gray-700 hidden sm:block"
+            >
               <Smile className="h-5 w-5" />
             </button>
             <input
@@ -426,7 +562,10 @@ export default function ChatApp() {
               placeholder="Write a message..."
               className="flex-1 py-2 px-3 focus:outline-none"
             />
-            <button type="button" className="text-gray-500 hover:text-gray-700 hidden sm:block">
+            <button
+              type="button"
+              className="text-gray-500 hover:text-gray-700 hidden sm:block"
+            >
               <Mic className="h-5 w-5" />
             </button>
             <button
@@ -441,7 +580,8 @@ export default function ChatApp() {
       )}
 
       {/* Right Sidebar */}
-      {((!isMobile && showRightSidebar) || (isMobile && activeMobileView === "info")) && (
+      {((!isMobile && showRightSidebar) ||
+        (isMobile && activeMobileView === "info")) && (
         <div className={`${isMobile ? "w-full" : "w-80"} border-l`}>
           <div className="p-4 border-b flex items-center justify-between">
             {isMobile && (
@@ -451,7 +591,9 @@ export default function ChatApp() {
             )}
             <div className="flex items-center gap-2">
               <h2 className="font-medium">Media</h2>
-              <span className="text-xs bg-gray-100 px-2 py-0.5 rounded-full text-gray-500">38</span>
+              <span className="text-xs bg-gray-100 px-2 py-0.5 rounded-full text-gray-500">
+                38
+              </span>
             </div>
             <button className="text-xs text-gray-500 flex items-center">
               View All <ChevronRight className="h-4 w-4" />
@@ -460,7 +602,10 @@ export default function ChatApp() {
 
           <div className="p-4 grid grid-cols-3 gap-2">
             {[1, 2, 3].map((item) => (
-              <div key={item} className="aspect-square bg-gray-200 rounded-lg overflow-hidden">
+              <div
+                key={item}
+                className="aspect-square bg-gray-200 rounded-lg overflow-hidden"
+              >
                 <Image
                   src={`/placeholder.svg?height=100&width=100&text=Image+${item}`}
                   alt={`Media ${item}`}
@@ -475,7 +620,9 @@ export default function ChatApp() {
           <div className="p-4 border-b flex items-center justify-between">
             <div className="flex items-center gap-2">
               <h2 className="font-medium">Link</h2>
-              <span className="text-xs bg-gray-100 px-2 py-0.5 rounded-full text-gray-500">14</span>
+              <span className="text-xs bg-gray-100 px-2 py-0.5 rounded-full text-gray-500">
+                14
+              </span>
             </div>
             <button className="text-xs text-gray-500 flex items-center">
               View All <ChevronRight className="h-4 w-4" />
@@ -487,16 +634,27 @@ export default function ChatApp() {
               <div className="p-3">
                 <div className="flex items-center gap-2">
                   <div className="w-10 h-10 bg-gray-200 rounded-lg overflow-hidden">
-                    <Image src="/placeholder.svg?height=40&width=40&text=🌐" alt="Website" width={40} height={40} />
+                    <Image
+                      src="/placeholder.svg?height=40&width=40&text=🌐"
+                      alt="Website"
+                      width={40}
+                      height={40}
+                    />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-gray-500 truncate">https://airbnb.com/</p>
-                    <p className="text-sm font-medium truncate">Airbnb - Register...</p>
+                    <p className="text-xs text-gray-500 truncate">
+                      https://airbnb.com/
+                    </p>
+                    <p className="text-sm font-medium truncate">
+                      Airbnb - Register...
+                    </p>
                   </div>
                 </div>
               </div>
               <div className="border-t px-3 py-2 flex justify-between items-center">
-                <button className="text-xs text-purple-600 font-medium">View Messages</button>
+                <button className="text-xs text-purple-600 font-medium">
+                  View Messages
+                </button>
                 <ChevronRight className="h-4 w-4 text-gray-400" />
               </div>
             </div>
@@ -505,16 +663,27 @@ export default function ChatApp() {
               <div className="p-3">
                 <div className="flex items-center gap-2">
                   <div className="w-10 h-10 bg-gray-200 rounded-lg overflow-hidden">
-                    <Image src="/placeholder.svg?height=40&width=40&text=🌐" alt="Website" width={40} height={40} />
+                    <Image
+                      src="/placeholder.svg?height=40&width=40&text=🌐"
+                      alt="Website"
+                      width={40}
+                      height={40}
+                    />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-gray-500 truncate">https://visitsingapore.com/</p>
-                    <p className="text-sm font-medium truncate">Visit Singapore - Explore...</p>
+                    <p className="text-xs text-gray-500 truncate">
+                      https://visitsingapore.com/
+                    </p>
+                    <p className="text-sm font-medium truncate">
+                      Visit Singapore - Explore...
+                    </p>
                   </div>
                 </div>
               </div>
               <div className="border-t px-3 py-2 flex justify-between items-center">
-                <button className="text-xs text-purple-600 font-medium">View Messages</button>
+                <button className="text-xs text-purple-600 font-medium">
+                  View Messages
+                </button>
                 <ChevronRight className="h-4 w-4 text-gray-400" />
               </div>
             </div>
@@ -523,7 +692,9 @@ export default function ChatApp() {
           <div className="p-4 border-b flex items-center justify-between">
             <div className="flex items-center gap-2">
               <h2 className="font-medium">Files</h2>
-              <span className="text-xs bg-gray-100 px-2 py-0.5 rounded-full text-gray-500">10</span>
+              <span className="text-xs bg-gray-100 px-2 py-0.5 rounded-full text-gray-500">
+                10
+              </span>
             </div>
             <button className="text-xs text-gray-500 flex items-center">
               View All <ChevronRight className="h-4 w-4" />
@@ -532,12 +703,42 @@ export default function ChatApp() {
 
           <div className="p-4 space-y-4 overflow-y-auto max-h-[calc(100vh-300px)]">
             {[
-              { name: "Schedule VCT APAC.pdf", size: "450 KB", date: "27 Jan 2022", type: "pdf" },
-              { name: "IMG_102.jpeg", size: "2.4 MB", date: "26 Jan 2022", type: "image" },
-              { name: "IMG_117.jpeg", size: "3.5 MB", date: "31 Jan 2022", type: "image" },
-              { name: "Video_02-24-22.mp4", size: "10.2 MB", date: "02 Feb 2022", type: "video" },
-              { name: "IMG_247.jpeg", size: "2.1 MB", date: "06 Feb 2022", type: "image" },
-              { name: "VCT Masters.pdf", size: "320 KB", date: "18 Feb 2022", type: "pdf" },
+              {
+                name: "Schedule VCT APAC.pdf",
+                size: "450 KB",
+                date: "27 Jan 2022",
+                type: "pdf",
+              },
+              {
+                name: "IMG_102.jpeg",
+                size: "2.4 MB",
+                date: "26 Jan 2022",
+                type: "image",
+              },
+              {
+                name: "IMG_117.jpeg",
+                size: "3.5 MB",
+                date: "31 Jan 2022",
+                type: "image",
+              },
+              {
+                name: "Video_02-24-22.mp4",
+                size: "10.2 MB",
+                date: "02 Feb 2022",
+                type: "video",
+              },
+              {
+                name: "IMG_247.jpeg",
+                size: "2.1 MB",
+                date: "06 Feb 2022",
+                type: "image",
+              },
+              {
+                name: "VCT Masters.pdf",
+                size: "320 KB",
+                date: "18 Feb 2022",
+                type: "pdf",
+              },
             ].map((file, index) => (
               <div key={index} className="flex items-center">
                 <div className="w-8 h-8 bg-gray-100 rounded flex items-center justify-center mr-3">
@@ -630,10 +831,8 @@ export default function ChatApp() {
         </div>
       )}
     </div>
-  )
+  );
 }
-
-
 
 // "use client"
 
