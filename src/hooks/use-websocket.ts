@@ -1,58 +1,82 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+"use client"
 
-import { useState, useEffect, useCallback } from "react";
+import { Message } from "@/types/chat"
+import { useState, useEffect, useRef, useCallback } from "react"
 
-type WebSocketMessage = {
-  type: string;
-  [key: string]: any;
-};
+interface WebSocketMessage {
+  type: string
+  channelId?: string
+  message?: any
+}
 
-export function useWebSocket(url: string | null) {
-  const [socket, setSocket] = useState<WebSocket | null>(null);
-  const [isConnected, setIsConnected] = useState(false);
-  const [lastMessage, setLastMessage] = useState<WebSocketMessage | null>(null);
+export function useWebSocket(channelId: string) {
+  const [connected, setConnected] = useState(false)
+  const [messages, setMessages] = useState<Message[]>([])
+  const socketRef = useRef<WebSocket | null>(null)
 
   useEffect(() => {
-    if (!url) return;
+    if (!channelId) return
 
-    // Create WebSocket connection
-    const ws = new WebSocket(url);
-    setSocket(ws);
+    // Close previous connection if exists
+    if (socketRef.current) {
+      socketRef.current.close()
+    }
 
-    // Connection opened
-    ws.addEventListener("open", () => {
-      setIsConnected(true);
-    });
+    // Create new WebSocket connection
+    const socket = new WebSocket(`ws://${window.location.host}`)
+    socketRef.current = socket
 
-    // Listen for messages
-    ws.addEventListener("message", (event) => {
-      const data = JSON.parse(event.data);
-      setLastMessage(data);
-    });
+    socket.onopen = () => {
+      console.log("WebSocket connected")
+      setConnected(true)
 
-    // Connection closed
-    ws.addEventListener("close", () => {
-      setIsConnected(false);
-    });
+      // Subscribe to the channel
+      socket.send(
+        JSON.stringify({
+          type: "subscribe",
+          channelId,
+        }),
+      )
+    }
+
+    socket.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data)
+
+        if (data.type === "subscribed") {
+          console.log(`Subscribed to channel: ${data.channelId}`)
+        } else if (data.message) {
+          setMessages((prev) => [...prev, data.message])
+        }
+      } catch (error) {
+        console.error("Error parsing WebSocket message:", error)
+      }
+    }
+
+    socket.onclose = () => {
+      console.log("WebSocket disconnected")
+      setConnected(false)
+    }
+
+    socket.onerror = (error) => {
+      console.error("WebSocket error:", error)
+    }
 
     // Cleanup on unmount
     return () => {
-      ws.close();
-    };
-  }, [url]);
+      socket.close()
+    }
+  }, [channelId])
 
-  // Send message function
-  const sendMessage = useCallback(
-    (message: WebSocketMessage) => {
-      if (socket && isConnected) {
-        socket.send(JSON.stringify(message));
-        return true;
-      }
-      return false;
-    },
-    [socket, isConnected]
-  );
+  // Function to send messages through the WebSocket
+  const sendMessage = useCallback((message: WebSocketMessage) => {
+    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+      socketRef.current.send(JSON.stringify(message))
+    } else {
+      console.error("WebSocket is not connected")
+    }
+  }, [])
 
-  return { socket, isConnected, lastMessage, sendMessage };
+  return { socket: socketRef.current, connected, messages, sendMessage }
 }
