@@ -27,7 +27,7 @@ export default function LoginPage() {
       toast.success("Login successfully !");
 
       // redirect home
-      router.push("/");
+      router.push("/chat");
     } catch (err: any) {
       toast.error(err?.data?.message || "Login failed");
     }
