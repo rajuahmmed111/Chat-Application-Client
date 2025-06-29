@@ -1,6 +1,3 @@
-import InputField from "@/components/registration/inputField";
-
-
 export default function Registration() {
   return (
     <>
@@ -18,9 +15,6 @@ export default function Registration() {
               experience to the next level with enhanced tools and personalized
               options.&quot;
             </p>
-
-            {/* Input field */}
-            <InputField />
           </div>
         </div>
       </div>

@@ -2,7 +2,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import ReduxProvider from "@/components/ReduxProvider";
 import { Toaster } from "react-hot-toast";
 
 const geistSans = localFont({
@@ -17,8 +16,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Chat Application",
-  description: "Modern chat application interface",
+  title: "Matthe Website",
+  description: "Modern web application interface",
 };
 
 export default function RootLayout({
@@ -29,10 +28,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} `}>
-        <ReduxProvider>
           {children}
           <Toaster position="top-right" reverseOrder={false} />
-        </ReduxProvider>
       </body>
     </html>
   );
