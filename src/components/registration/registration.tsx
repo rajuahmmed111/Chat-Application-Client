@@ -1,10 +1,10 @@
-import InputField from "@/components/registration/inputField";
-
+import { Card, CardContent } from "../ui/card";
+import InputField from "./inputField";
 
 export default function Registration() {
   return (
     <>
-      <div className="bg-purple-600 h-[60px]"></div>
+      <div className="bg-[#100C73] h-[60px]"></div>
 
       <div className="bg-[#F1F4F8] px-4 py-16">
         <div className="flex justify-center items-center">
@@ -19,8 +19,19 @@ export default function Registration() {
               options.&quot;
             </p>
 
-            {/* Input field */}
-            <InputField />
+            {/* form card */}
+            <div>
+              <Card className="rounded-3xl overflow-hidden md:px-10">
+                <CardContent className="p-6 md:p-8">
+                  <h2 className="text-2xl font-semibold text-center mb-8">
+                    Registration
+                  </h2>
+
+                  {/* form in input field */}
+                  <InputField />
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </div>
